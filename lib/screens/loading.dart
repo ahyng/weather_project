@@ -1,5 +1,9 @@
+import 'dart:math';
 import 'package:flutter/material.dart';
 import 'package:geolocator/geolocator.dart';
+import 'package:weather_project/data/my_location.dart';
+import 'package:http/http.dart' as http;
+import 'dart:convert';
 
 class Loading extends StatefulWidget {
   const Loading({super.key});
@@ -9,12 +13,39 @@ class Loading extends StatefulWidget {
 }
 
 class _LoadingState extends State<Loading> {
-  void getLocation() async {
-    LocationPermission permission = await Geolocator.requestPermission();
-    Position position = await Geolocator.getCurrentPosition(
-        desiredAccuracy: LocationAccuracy.high);
-    print(position);
+  double? latitude3;
+  double? longitude3;
+
+  @override
+  void initState() {
+    super.initState();
+    getLocation();
+    // fetchData();
   }
+
+  void getLocation() async {
+    MyLocation myLocation = MyLocation();
+    await myLocation.getMyCurrentLocation();
+    latitude3 = myLocation.latitude2;
+    longitude3 = myLocation.longitude2;
+    print(latitude3);
+    print(longitude3);
+  }
+
+  // void fetchData() async {
+
+  //     var myJson = parsingData['weather'][0]['description'];
+  //     print(myJson);
+
+  //     var wind = parsingData['wind']['speed'];
+  //     print(wind);
+
+  //     var id = parsingData['id'];
+  //     print(id);
+  //   } else {
+  //     print(response.statusCode);
+  //   }
+  // }
 
   @override
   Widget build(BuildContext context) {
@@ -29,9 +60,7 @@ class _LoadingState extends State<Loading> {
               ),
             ),
           ),
-          onPressed: () {
-            getLocation();
-          },
+          onPressed: null,
           child: const Text(
             'Get my location',
             style: TextStyle(
