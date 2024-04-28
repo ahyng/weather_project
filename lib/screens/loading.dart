@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:weather_project/data/my_location.dart';
 import 'package:weather_project/data/network.dart';
 
+const apikey = '8bfc9e11b663cb0cbc87475d69ee8166';
+
 class Loading extends StatefulWidget {
   const Loading({super.key});
 
@@ -29,7 +31,7 @@ class _LoadingState extends State<Loading> {
     print(longitude3);
 
     Network network = Network(
-        'https://samples.openweathermap.org/data/2.5/weather?q=London&appid=b1b15e88fa797225412429c1c50c122a1');
+        'https://api.openweathermap.org/data/2.5/weather?lat=$latitude3&lon=$longitude3&appid=$apikey');
     var weatherData = await network.getJsonData();
     print(weatherData);
   }
@@ -62,7 +64,9 @@ class _LoadingState extends State<Loading> {
               ),
             ),
           ),
-          onPressed: null,
+          onPressed: () {
+            getLocation();
+          },
           child: const Text(
             'Get my location',
             style: TextStyle(
