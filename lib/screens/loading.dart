@@ -1,9 +1,6 @@
-import 'dart:math';
 import 'package:flutter/material.dart';
-import 'package:geolocator/geolocator.dart';
 import 'package:weather_project/data/my_location.dart';
-import 'package:http/http.dart' as http;
-import 'dart:convert';
+import 'package:weather_project/data/network.dart';
 
 class Loading extends StatefulWidget {
   const Loading({super.key});
@@ -30,6 +27,11 @@ class _LoadingState extends State<Loading> {
     longitude3 = myLocation.longitude2;
     print(latitude3);
     print(longitude3);
+
+    Network network = Network(
+        'https://samples.openweathermap.org/data/2.5/weather?q=London&appid=b1b15e88fa797225412429c1c50c122a1');
+    var weatherData = await network.getJsonData();
+    print(weatherData);
   }
 
   // void fetchData() async {
