@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:weather_project/data/my_location.dart';
 import 'package:weather_project/data/network.dart';
+import 'package:weather_project/screens/weather_screen.dart';
 
 const apikey = '8bfc9e11b663cb0cbc87475d69ee8166';
 
@@ -31,9 +32,14 @@ class _LoadingState extends State<Loading> {
     print(longitude3);
 
     Network network = Network(
-        'https://api.openweathermap.org/data/2.5/weather?lat=$latitude3&lon=$longitude3&appid=$apikey');
+        'https://api.openweathermap.org/data/2.5/weather?lat=$latitude3&lon=$longitude3&appid=$apikey&units=metric');
     var weatherData = await network.getJsonData();
     print(weatherData);
+    Navigator.push(context, MaterialPageRoute(builder: (context) {
+      return WeatherScreen(
+        parseWeatherData: weatherData,
+      );
+    }));
   }
 
   // void fetchData() async {
